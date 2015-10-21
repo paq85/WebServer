@@ -15,7 +15,7 @@ See /src/Tests/Large/PHPBuiltInWebServerTest.php for an example.
 
 Use composer
 
-    composer require "Paq85/WebServer":"^0.1"
+    composer require "paq85/web-server":"^0.1"
 
 ## Setup
 
