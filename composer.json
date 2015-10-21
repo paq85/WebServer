@@ -1,5 +1,5 @@
 {
-  "name": "Paq85/WebServer",
+  "name": "paq85/web-server",
   "type": "library",
   "description": "PHP wrappers for web servers",
   "keywords": ["http server"],
