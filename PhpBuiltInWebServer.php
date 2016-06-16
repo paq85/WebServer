@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Paq85\WebServer;
 
 use Symfony\Component\Process\Process;
@@ -45,7 +47,7 @@ class PhpBuiltInWebServer
      * @param string $webRoot eg. /var/www/html
      * @param int $timeout eg. 10 - waits 10 seconds for server to be ready
      */
-    public function __construct($host, $port, $webRoot, $timeout = 10)
+    public function __construct(string $host, int $port, string $webRoot, int $timeout = 10)
     {
         $this->host = $host;
         $this->port = $port;
@@ -63,6 +65,7 @@ class PhpBuiltInWebServer
         }
 
         $processBuilder = new ProcessBuilder(['/usr/bin/php', '-S', "{$this->host}:{$this->port}", '-t', $this->webRoot]);
+        $processBuilder->setTimeout(10);
         $this->serverProcess = $processBuilder->getProcess();
         $this->serverProcess->start();
         // server needs some time to boot up
@@ -87,7 +90,7 @@ class PhpBuiltInWebServer
     public function stop()
     {
         while ($this->isRunning()) {
-            $this->serverProcess->signal(SIGQUIT);
+            $this->serverProcess->stop($this->timeout, SIGINT);
             // it needs some time to stop
             usleep(10);
         }
@@ -96,7 +99,7 @@ class PhpBuiltInWebServer
     /**
      * @return bool
      */
-    public function isRunning()
+    public function isRunning(): bool
     {
         return ($this->serverProcess && $this->serverProcess->isRunning());
     }
