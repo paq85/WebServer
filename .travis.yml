@@ -2,10 +2,9 @@ language: php
 
 php:
   - '7.0'
-  - nightly
 
-install:
-  - composer install --no-interaction --prefer-source
+before_script:
+  - composer install --no-interaction --prefer-dist
 
 script:
-    - ./vendor/bin/phpunit -c phpunit.xml.dist
+    - phpunit -c phpunit.xml.dist
